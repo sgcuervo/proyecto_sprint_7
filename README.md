@@ -31,6 +31,7 @@ Puedes acceder a la aplicación aquí:
 Clona el repositorio:
 
 git clone https://github.com/sgcuervo/proyecto_sprint_7.git
+
 cd proyecto_sprint_7
 
 Instala las dependencias:
