@@ -23,10 +23,10 @@ if "show_box" not in st.session_state: # Diagrama de caja
 # Histograma
 st.title("Histograma 'Odometro'")
 st.write("Oprime el siguiente boton para generar un histograma que muestre la distribucion de kilometraje de los vehiculos")
-hist_button = st.button("Generar histograma")
+hist_button = st.button("Mostrar/Ocultar histograma")
 
 if hist_button:
-    st.session_state.show_hist = True # Activamos nuestra variable de entorno al oprimir hist_button
+    st.session_state.show_hist = not st.session_state.show_hist # Activamos nuestra variable de entorno al oprimir hist_button
     
 # Creamos nuestro histograma
 if st.session_state.show_hist:
@@ -45,16 +45,17 @@ if st.session_state.show_hist:
 # Grafico de dispersion
 st.title("Grafico de dispersion (Precio vs kilometraje y condicion)")
 st.write("Has click en el siguiente boton para generar un grafico de dispersion que nos muestre como cambia el costo de un vehiculo segun su uso y condicion")
-scatter_button = st.button("Generar grafico de dispersion")
+scatter_button = st.button("Mostrar/Ocultar grafico de dispersion")
 
 if scatter_button:
-    st.session_state.show_scatter = True
+    st.session_state.show_scatter = not st.session_state.show_scatter # El boton activa nuestra variable de entorno
     
 if st.session_state.show_scatter:
-    sct = px.scatter(car_data, x="odometer", y="price", color="condition")
+    sct = px.scatter(car_data, x="odometer", y="price", color="condition") # Creamos nuestro grafico de dispersion
     st.plotly_chart(sct, use_container_width=True)
     
-    sct_check =st.checkbox("Mostrar informacion sobre el grafico de dispersion")
+    # Descripcion de nuestro grafico
+    sct_check =st.checkbox("Mostrar informacion sobre el grafico de dispersion") 
     if sct_check:
         st.write("""
                  Relación entre kilometraje y precio (Grafico de dispersion):
@@ -66,15 +67,16 @@ if st.session_state.show_scatter:
 # Diagrama de caja
 st.title("Diagrama de caja (Condicion vs precio)")
 st.write("Has click en el siguiente boton para generar un diagrama de caja que nos muestre la distribucion de precios segun la condicion del vehiculo")
-box_button = st.button("Generar diagrama de caja")
+box_button = st.button("Mostrar/Ocultar diagrama de caja")
 
 if box_button:
-    st.session_state.show_box = True
+    st.session_state.show_box = not st.session_state.show_box # Agregamos la variable de entorno al hacer click en nuestro boton
     
 if st.session_state.show_box:
-    box = px.box(car_data, x="condition", y="price")
+    box = px.box(car_data, x="condition", y="price") # Creamos nuestro diagrama de caja
     st.plotly_chart(box, use_container_width=True)
     
+    # Informacion sobre el diagrama de caja
     box_check =st.checkbox("Mostrar informacion sobre el diagrama de caja")
     if box_check:
         st.write("""
@@ -83,7 +85,7 @@ if st.session_state.show_box:
                  Permite observar diferencias en la mediana, la dispersión y la presencia de valores atípicos. 
                  Se aprecia que las categorías con mejor estado presentan precios medianos más elevados, lo que confirma que la condición es un factor relevante en la determinación del valor de mercado.
                  """
-                 ) 
+                 )
 
 
 
