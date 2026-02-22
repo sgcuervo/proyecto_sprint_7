@@ -34,7 +34,7 @@ if st.session_state.show_hist:
     st.plotly_chart(hist, use_container_width=True)
     
     # Descripcion del grafico
-    hist_check = st.checkbox("¿Que estoy viendo?")
+    hist_check = st.checkbox("Mostrar informacion sobre el histograma")
     if hist_check:
         st.write("""
                   Distribución del kilometraje (Histograma):
@@ -54,12 +54,37 @@ if st.session_state.show_scatter:
     sct = px.scatter(car_data, x="odometer", y="price", color="condition")
     st.plotly_chart(sct, use_container_width=True)
     
-    sct_check =st.checkbox("Scatt")
+    sct_check =st.checkbox("Mostrar informacion sobre el grafico de dispersion")
     if sct_check:
         st.write("""
-                 Relación entre kilometraje y precio (Scatter plot):
+                 Relación entre kilometraje y precio (Grafico de dispersion):
                  Este gráfico analiza la relación entre el kilometraje y el precio de los vehículos, diferenciando por condición.
                  El uso de colores permite identificar cómo la condición del vehículo influye en esta relación
                  """
                  ) 
+
+# Diagrama de caja
+st.title("Diagrama de caja (Condicion vs precio)")
+st.write("Has click en el siguiente boton para generar un diagrama de caja que nos muestre la distribucion de precios segun la condicion del vehiculo")
+box_button = st.button("Generar diagrama de caja")
+
+if box_button:
+    st.session_state.show_box = True
+    
+if st.session_state.show_box:
+    box = px.box(car_data, x="condition", y="price")
+    st.plotly_chart(box, use_container_width=True)
+    
+    box_check =st.checkbox("Mostrar informacion sobre el diagrama de caja")
+    if box_check:
+        st.write("""
+                 Comparación de precios según condición (Diagrama de caja):
+                 Este gráfico compara la distribución de precios entre las distintas categorías de condición del vehículo. 
+                 Permite observar diferencias en la mediana, la dispersión y la presencia de valores atípicos. 
+                 Se aprecia que las categorías con mejor estado presentan precios medianos más elevados, lo que confirma que la condición es un factor relevante en la determinación del valor de mercado.
+                 """
+                 ) 
+
+
+
 
